@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Tous les publications'%}
+
+{% block body %}
+        <h1>{{pluralize (publications|length, 'Publication')}} </h1>
+           {% for publication in publications %}
+                <article>
+                        <h2>{{publication.titre}}</h2>
+                        <p>{{publication.description}}</p>
+                </article>
+           {% endfor %}
+{% endblock %}
