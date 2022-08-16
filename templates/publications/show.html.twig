@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title publication.titre %}
+
+{% block body %}
+
+<article>
+        <h1>{{publication.titre}}</h1>
+        <p>{{publication.description}}</p>
+
+</article>
+
+<a href="{{path('app_publications')}}">Rétour vers tous les publications</a>
+{% endblock %}
