@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\PublicationRepository;
 use App\Entity\Publication;
+use App\Form\PublicationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -30,22 +31,13 @@ class PublicationsController extends AbstractController
 
     public function create(Request $request, EntityManagerInterface $em): Response
     {
-        //j'utilise forme builder pour crée le formulaire
-
-        // dd($this->createFormBuilder());
+       
 
         $publication = new Publication; //permet de récupére le  requete tapper par l'utilsateur
 
-        $form =   $this->createFormBuilder($publication)
-            ->add('titre', TextType::class)
-            ->add('description', TextareaType::class)
-            //  ->add('submit', SubmitType::class, ['label' => 'Crée un publication']) // n'est pas récomander par symfony
-            ->getForm();
+        $form =   $this->createForm(PublicationType::class, $publication);
 
-        // dd($form);
-
-        //Le Request gére la soumission de formulaire
-
+    
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -83,11 +75,7 @@ class PublicationsController extends AbstractController
 
     public function edit(Request $request, Publication $publication, EntityManagerInterface $em): Response
     {
-        $form =   $this->createFormBuilder($publication)
-        ->add('titre', TextType::class)
-        ->add('description', TextareaType::class)
-        //  ->add('submit', SubmitType::class, ['label' => 'Crée un publication']) // n'est pas récomander par symfony
-        ->getForm();
+        $form =   $this->createForm(PublicationType::class, $publication);
 
         $form->handleRequest($request);
 
