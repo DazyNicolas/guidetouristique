@@ -7,7 +7,7 @@
 <article>
         <h1>{{publication.titre}}</h1>
         <p>{{publication.description}}</p>
-
+        <a href="{{path('app_publication_edit', {'id': publication.id})}}">Moddifier la publication</a>
 </article>
 
 <a href="{{path('app_publications')}}">Rétour vers tous les publications</a>

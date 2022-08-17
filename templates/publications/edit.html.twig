@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Modiffication' %}
+
+{% block body %}
+
+	<h1>Moddification de publication | ({{publication.id}})</h1>
+
+	{{form_start(form)}}
+
+	{{ form_widget(form) }}
+
+	<input type="submit" value="Metre en jour la publication" formnovalidate>
+	{{form_end(form)}}
+
+	<a href="{{path('app_publications')}}">Rétour vers tous les publications</a>
+{% endblock %}
