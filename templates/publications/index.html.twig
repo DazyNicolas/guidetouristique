@@ -4,6 +4,7 @@
 
 {% block body %}
         <h1>{{pluralize (publications|length, 'Publication')}} </h1>
+        
            {% for publication in publications %}
                 <article>
                         <h2>

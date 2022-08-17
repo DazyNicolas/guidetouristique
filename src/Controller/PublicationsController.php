@@ -16,9 +16,10 @@ class PublicationsController extends AbstractController
     {
 
        // dump($publicationsRepository ->findAll());
-       $publications = $publicationsRepository -> findAll();
+       $publications = $publicationsRepository -> findBy([], ['createdAt'=>'DESC']);
         return $this->render('publications/index.html.twig', compact('publications'));
     }
+    
     #[Route('/publications/{id<[0-9]+>}', name: 'app_publication_show')]
 
     public function show(Publication $publication): Response

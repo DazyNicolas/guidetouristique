@@ -5,12 +5,15 @@ namespace App\Entity;
 use App\Repository\PublicationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\Timestampable;
 
 #[ORM\Entity(repositoryClass: PublicationRepository::class)]
 #[ORM\Table(name:"publications")]
-
+#[ORM\HasLifecycleCallbacks]
 class Publication
 {
+    use Timestampable;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
