@@ -9,11 +9,9 @@ use App\Repository\PublicationRepository;
 use App\Entity\Publication;
 use App\Form\PublicationType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Validator\Constraint as Assert;
+
 
 class PublicationsController extends AbstractController
 {

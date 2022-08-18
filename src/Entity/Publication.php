@@ -6,6 +6,8 @@ use App\Repository\PublicationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\Timestampable;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: PublicationRepository::class)]
 #[ORM\Table(name:"publications")]
@@ -20,9 +22,13 @@ class Publication
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank( )]
+    #[Assert\Length(min: 4)]
     private ?string $titre = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 5)]
     private ?string $description = null;
 
     public function getId(): ?int
