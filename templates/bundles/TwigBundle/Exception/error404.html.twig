@@ -1,0 +1,10 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Page introvalbe</h1>
+
+    <p>
+        La page demandée est introuvable. Vérification pour toute faute d'orthographe d'URL ou <a href="{{ path('app_home') }}">retour à la page d'accueil</a>.
+    </p>
+{% endblock %}
