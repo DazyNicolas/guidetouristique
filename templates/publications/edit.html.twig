@@ -6,12 +6,7 @@
 
 	<h1>Moddification de publication | ({{publication.id}})</h1>
 
-	{{form_start(form)}}
-
-	{{ form_widget(form) }}
-
-	<input type="submit" value="Metre en jour la publication" formnovalidate>
-	{{form_end(form)}}
+	{{ include('publications/_form.html.twig',{'submitButtonText': 'Enrégistré le mis à jours de publication'}) }}
 
 	<a href="{{path('app_publications')}}">Rétour vers tous les publications</a>
 {% endblock %}

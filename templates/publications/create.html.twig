@@ -6,12 +6,7 @@
 
 	<h1>Crée un publication</h1>
 
-	{{form_start(form)}}
-
-	{{ form_widget(form) }}
-
-	<input type="submit" value="Crée un publication" formnovalidate>
-	{{form_end(form)}}
+ {{ include('publications/_form.html.twig') }}
 
 	<a href="{{path('app_publications')}}">Rétour vers tous les publications</a>
 {% endblock %}
