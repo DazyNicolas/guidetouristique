@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 class PublicationsController extends AbstractController
 {
@@ -92,10 +93,18 @@ class PublicationsController extends AbstractController
     
     #[Route('/publications/{id<[0-9]+>}/delete', name: 'app_publication_delete', methods: "POST")]
 
-    public function delete( Publication $publication, EntityManagerInterface $em)
+    public function delete(Request $request, Publication $publication, EntityManagerInterface $em)
     {
-       $em->remove($publication);
-       $em->flush();
+
+
+       // dd($request->request->get('csrf_token'));
+        if($this->isCsrfTokenValid('publication_deletion_'. $publication->getId(),$request->request->get('csrf_token'))){
+            $em->remove($publication);
+            $em->flush();
+        }
+            
+      
+       
        return $this->redirectToRoute('app_publications');
     }
 }
