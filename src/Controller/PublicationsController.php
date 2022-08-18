@@ -51,6 +51,8 @@ class PublicationsController extends AbstractController
             $em->persist($publication);
             $em->flush();
 
+            $this->addFlash('success', 'Publication créé avec succès');
+
             return $this->redirectToRoute('app_publications');
         }
 
@@ -83,6 +85,8 @@ class PublicationsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
 
+            $this->addFlash('success', 'mise à jour réussie');
+
             return $this->redirectToRoute('app_publications');
         }
         return $this->render('publications/edit.html.twig', [
@@ -101,6 +105,9 @@ class PublicationsController extends AbstractController
         if($this->isCsrfTokenValid('publication_deletion_'. $publication->getId(),$request->request->get('csrf_token'))){
             $em->remove($publication);
             $em->flush();
+
+            $this->addFlash('info', 'supprimé avec succès');
+            
         }
             
       
