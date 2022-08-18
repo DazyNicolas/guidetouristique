@@ -91,7 +91,7 @@ class PublicationsController extends AbstractController
         ]);
     }
     
-    #[Route('/publications/{id<[0-9]+>}/delete', name: 'app_publication_delete', methods: "POST")]
+    #[Route('/publications/{id<[0-9]+>}', name: 'app_publication_delete', methods: "POST")]
 
     public function delete(Request $request, Publication $publication, EntityManagerInterface $em)
     {
