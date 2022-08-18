@@ -50,6 +50,9 @@
     "knplabs/knp-time-bundle": {
         "version": "v1.19.0"
     },
+    "mercuryseries/flashy-bundle": {
+        "version": "v5.1.0"
+    },
     "phpunit/phpunit": {
         "version": "9.5",
         "recipe": {

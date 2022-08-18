@@ -10,7 +10,8 @@ use App\Entity\Publication;
 use App\Form\PublicationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraint as Assert;
+use MercurySeries\FlashyBundle\FlashyNotifier;
+
 
 
 class PublicationsController extends AbstractController
@@ -28,7 +29,7 @@ class PublicationsController extends AbstractController
 
     #[Route('/publications/create', name: 'app_publication_create', methods: "GET|POST")]
 
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(Request $request, EntityManagerInterface $em, FlashyNotifier $flashy): Response
     {
        
 
@@ -49,7 +50,8 @@ class PublicationsController extends AbstractController
             $em->persist($publication);
             $em->flush();
 
-            $this->addFlash('success', 'Publication créé avec succès');
+           // $this->addFlash('success', 'Publication créé avec succès');
+            $flashy->success('success', 'Publication créé avec succès');
 
             return $this->redirectToRoute('app_publications');
         }
@@ -74,7 +76,7 @@ class PublicationsController extends AbstractController
 
     #[Route('/publications/{id<[0-9]+>}/edit', name: 'app_publication_edit', methods: "GET|POST")]
 
-    public function edit(Request $request, Publication $publication, EntityManagerInterface $em): Response
+    public function edit(Request $request, Publication $publication, EntityManagerInterface $em, FlashyNotifier $flashy): Response
     {
         $form =   $this->createForm(PublicationType::class, $publication);
 
@@ -83,7 +85,8 @@ class PublicationsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
 
-            $this->addFlash('success', 'mise à jour réussie');
+          //  $this->addFlash('success', 'mise à jour réussie');
+            $flashy->success('mise à jour réussie');
 
             return $this->redirectToRoute('app_publications');
         }
@@ -95,7 +98,7 @@ class PublicationsController extends AbstractController
     
     #[Route('/publications/{id<[0-9]+>}', name: 'app_publication_delete', methods: "POST")]
 
-    public function delete(Request $request, Publication $publication, EntityManagerInterface $em)
+    public function delete(Request $request, Publication $publication, EntityManagerInterface $em,  FlashyNotifier $flashy)
     {
 
 
@@ -104,7 +107,9 @@ class PublicationsController extends AbstractController
             $em->remove($publication);
             $em->flush();
 
-            $this->addFlash('info', 'supprimé avec succès');
+
+           // $this->addFlash('info', 'supprimé avec succès');
+            $flashy->primarydark('supprimé avec succès');
             
         }
             

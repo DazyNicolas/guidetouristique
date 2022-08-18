@@ -9,12 +9,20 @@
 		<link
 		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+			<link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+			<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+			<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
 		{% endblock %}
 
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
+			<script src="//code.jquery.com/jquery.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+			 <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
 		{% endblock %}
 
 		<style>
@@ -22,6 +30,7 @@
 			padding: 10px;
 			color : #fff;
 			text-align:center;
+			margin:non
 		}
 		.alert-info{
 			background-color:blue;
@@ -35,7 +44,7 @@
 		</style>
 	</head>
 	<body>
-		{{include('layouts/partials/_flash_messages.html.twig')}}
+		
 		<nav>
 			<ul>
 				<li><a href="{{path('app_home')}}">Accueil</a></li>
@@ -44,5 +53,7 @@
 			</ul>
 		</nav>
 		{% block body %}{% endblock %}
+
+		 {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 	</body>
 </html>
