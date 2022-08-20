@@ -3,10 +3,15 @@
 {% block title 'Modiffication' %}
 
 {% block body %}
-
-	<h1>Moddification de publication | ({{publication.id}})</h1>
+	<div class="row">
+		<div class="col-md-6 mx-auto">
+			<h1>Moddification de publication | ({{publication.id}})</h1>
 
 	{{ include('publications/_form.html.twig',{'submitButtonText': 'Enrégistré le mis à jours de publication'}) }}
 
 	<a href="{{path('app_publications')}}">Rétour vers tous les publications</a>
+
+		</div>
+	
+	</div>
 {% endblock %}

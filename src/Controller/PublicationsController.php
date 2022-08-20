@@ -51,7 +51,7 @@ class PublicationsController extends AbstractController
             $em->flush();
 
            // $this->addFlash('success', 'Publication créé avec succès');
-            $flashy->success('success', 'Publication créé avec succès');
+            $flashy->success('Publication créé avec succès');
 
             return $this->redirectToRoute('app_publications');
         }

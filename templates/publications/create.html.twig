@@ -4,9 +4,16 @@
 
 {% block body %}
 
-	<h1>Crée un publication</h1>
+	<div class="row">
+		<div class="col-md-6 mx-auto">
+			<h1>Crée un publication</h1>
 
- {{ include('publications/_form.html.twig') }}
+ 			{{ include('publications/_form.html.twig') }}
 
+		</div>
+	
+	</div>
+
+	
 	<a href="{{path('app_publications')}}">Rétour vers tous les publications</a>
 {% endblock %}
