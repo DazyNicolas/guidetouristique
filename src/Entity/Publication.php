@@ -31,6 +31,9 @@ class Publication
     #[Assert\Length(min: 5)]
     private ?string $description = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageName = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -56,6 +59,18 @@ class Publication
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): self
+    {
+        $this->imageName = $imageName;
 
         return $this;
     }
