@@ -7,9 +7,9 @@
         
            {% for publication in publications %}
                 <article>
-                        <h2>
+                        <h3>
                         <a href="{{path('app_publication_show', {id: publication.id})}}">{{publication.titre}}</a>     
-                        </h2>
+                        </h3>
                         <p>{{publication.description | u.truncate(10, '...', false)}}</p>
                         <p>Publiée le {{publication.createdAt|ago}}</p>
                 </article>
