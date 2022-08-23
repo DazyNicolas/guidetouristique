@@ -21,7 +21,7 @@
           {% for publication in row %}
         <div class="publication col-md-4">
           <div class="card shadow-sm">
-          <div class="mw-100 overflow-hidden">
+          <div class="mw-100 rounded-top overflow-hidden">
           <a href="{{path('app_publication_show', {id: publication.id})}}" >
             <img class="bd-placeholder-img card-img-top" src="{{ (publication.imageName ? vich_uploader_asset(publication) : asset('images/isalo-3.jpg')) | imagine_filter('squared_thumbnall_medium') }}" alt="{{ publication.titre }}">
           </a>

@@ -6,8 +6,10 @@
 <div class="row">
 
 <div class="col-md-8 mx-auto">
-<div class="card mb-3">
-   <img class="bd-placeholder-img card-img-top" src="{{ (publication.imageName ? vich_uploader_asset(publication) : asset('images/isalo-3.jpg')) | imagine_filter('squared_thumbnall_medium') }}" alt="{{ publication.titre }}">
+<div class=" publication card mb-3">
+     <div class="mw-100 rounded-top overflow-hidden">
+            <img class="bd-placeholder-img card-img-top" src="{{ (publication.imageName ? vich_uploader_asset(publication) : asset('images/isalo-3.jpg')) | imagine_filter('squared_thumbnall_medium') }}" alt="{{ publication.titre }}">
+          </div>
   <div class="card-body">
     <h5 class="card-title">{{publication.titre}}</h5>
     <p class="card-text">{{publication.description}}</p>
