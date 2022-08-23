@@ -18,8 +18,7 @@ class PublicationType extends AbstractType
             'allow_delete' => true,
              'download_label' => false,
              'download_uri' => false,
-       
-            //'imagine_pattern' => '...',
+             'imagine_pattern' => 'squared_thumbnall_smail',
         ])
             ->add('titre')
             ->add('description')

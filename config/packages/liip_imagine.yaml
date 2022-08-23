@@ -1,0 +1,33 @@
+# Documentation on how to configure the bundle can be found at: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
+liip_imagine:
+    # valid drivers options include "gd" or "gmagick" or "imagick"
+    driver: "imagick"
+
+    filter_sets:
+
+        # name our first filter set "my_min_up_scale_filter"
+        squared_thumbnall_medium:
+              filters:
+
+                # use and setup the "thumbnail" filter
+                thumbnail:
+
+                    # set the thumbnail size to "32x32" pixels
+                    size: [300, 300]
+
+                    # crop the input image, if required
+                    mode: inset
+                    allow_upscale : true
+
+        squared_thumbnall_smail:
+              filters:
+
+                # use and setup the "thumbnail" filter
+                thumbnail:
+
+                    # set the thumbnail size to "32x32" pixels
+                    size: [200, 200]
+
+                    # crop the input image, if required
+                    mode: inset
+                    allow_upscale : true
