@@ -3,16 +3,34 @@
 {% block title publication.titre %}
 
 {% block body %}
+<div class="row">
+
+<div class="col-md-8 mx-auto">
+<div class="card mb-3">
+   <img class="bd-placeholder-img card-img-top" src="{{ (publication.imageName ? vich_uploader_asset(publication) : asset('images/isalo-3.jpg')) | imagine_filter('squared_thumbnall_medium') }}" alt="{{ publication.titre }}">
+  <div class="card-body">
+    <h5 class="card-title">{{publication.titre}}</h5>
+    <p class="card-text">{{publication.description}}</p>
+    <p class="card-text"> Publier par Guide name  <small class="text-muted">{{publication.createdAt|ago}}</small></p>
+  </div>
+  <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+  <a href="{{path('app_publication_edit', {'id': publication.id})}}" type="button" class="btn btn-warning">Moddifier</a>
+  <a href="#" type="button" class="btn btn-danger " onClick="event.preventDefault(); confirm('Vous voulez vraiment supprimer cette publication ?') && document.querySelector('#js-publication-delete-form').submit()">Supprimer</a>
+</div>
+</div>
+</div>
+
+</div>
 
 <article>
-        <h1>{{publication.titre}}</h1>
-        <p>{{publication.description}}</p>
+        <h1></h1>
+        <p></p>
        
 </article>
-<a href="{{path('app_publication_edit', {'id': publication.id})}}">Moddifier la publication</a>
 
-<a href="#" onClick="event.preventDefault(); confirm('Vous voulez vraiment supprimer cette publication ?') && document.querySelector('#js-publication-delete-form').submit()">Supprimer</a>
-<a href="{{path('app_publications')}}">Rétour vers tous les publications</a>
+
+
+
 
 
  <form id="js-publication-delete-form" action = "{{path('app_publication_delete', {'id': publication.id})}}" method="post" style="display:none;">

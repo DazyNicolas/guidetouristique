@@ -13,10 +13,10 @@ liip_imagine:
                 thumbnail:
 
                     # set the thumbnail size to "32x32" pixels
-                    size: [300, 300]
+                    size: [600, 300]
 
                     # crop the input image, if required
-                    mode: inset
+                    mode: outbound
                     allow_upscale : true
 
         squared_thumbnall_smail:
@@ -26,8 +26,8 @@ liip_imagine:
                 thumbnail:
 
                     # set the thumbnail size to "32x32" pixels
-                    size: [200, 200]
+                    size: [400, 200]
 
                     # crop the input image, if required
-                    mode: inset
+                    mode: outbound
                     allow_upscale : true

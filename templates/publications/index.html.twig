@@ -20,7 +20,7 @@
           {% for row in publications|batch(3) %}  
           {% for publication in row %}
         <div class="publication col-md-4">
-          <div class="card border-danger shadow-sm">
+          <div class="card shadow-sm">
           <div class="mw-100 overflow-hidden">
           <a href="{{path('app_publication_show', {id: publication.id})}}" >
             <img class="bd-placeholder-img card-img-top" src="{{ (publication.imageName ? vich_uploader_asset(publication) : asset('images/isalo-3.jpg')) | imagine_filter('squared_thumbnall_medium') }}" alt="{{ publication.titre }}">
@@ -35,7 +35,7 @@
                 <div class="btn-group">
                  <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                 </div>
-                <small class="text-muted">Publier par Rafanomezantsoa Dazy Exelle Nicolas</small>
+                <small class="text-muted">Guide-isalo</small>
               </div>
               <hr>
               <div class="d-flex justify-content-between align-items-center mt-2">
