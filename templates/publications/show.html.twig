@@ -13,7 +13,7 @@
   <div class="card-body">
     <h5 class="card-title">{{publication.titre}}</h5>
     <p class="card-text">{{publication.description}}</p>
-    <p class="card-text"> Publier par Guide name  <small class="text-muted">{{publication.createdAt|ago}}</small></p>
+    <p class="card-text"> Publier par {{publication.guide.fullName}} <small class="text-muted">{{publication.createdAt|ago}}</small></p>
   </div>
   <div class="btn-group" role="group" aria-label="Basic mixed styles example">
   <a href="{{path('app_publication_edit', {'id': publication.id})}}" type="button" class="btn btn-warning">Moddifier</a>
