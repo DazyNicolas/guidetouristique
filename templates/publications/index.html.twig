@@ -3,15 +3,56 @@
 {% block title 'Tous les publications'%}
 
 {% block body %}
-        <h1>{{pluralize (publications|length, 'Publication')}} </h1>
-        
-           {% for publication in publications %}
-                <article>
-                        <h3>
-                        <a href="{{path('app_publication_show', {id: publication.id})}}">{{publication.titre}}</a>     
-                        </h3>
-                        <p>{{publication.description | u.truncate(10, '...', false)}}</p>
-                        <p>Publiée le {{publication.createdAt|ago}}</p>
-                </article>
+
+ <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Publication des guides</h1>
+        <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+        <p>
+         <h1>{{pluralize (publications|length, 'Publication')}}  aux total </h1>
+        </p>
+      </div>
+    </div>
+  </section>
+        {% if publications|length > 0 %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {% for row in publications|batch(3) %}  
+          {% for publication in row %}
+        <div class="publication col-md-4">
+          <div class="card border-danger shadow-sm">
+          <div class="mw-100 overflow-hidden">
+          <a href="{{path('app_publication_show', {id: publication.id})}}" >
+            <img class="bd-placeholder-img card-img-top" src="{{ (publication.imageName ? vich_uploader_asset(publication) : asset('images/isalo-3.jpg')) | imagine_filter('squared_thumbnall_medium') }}" alt="{{ publication.titre }}">
+          </a>
+          </div>
+          
+            <div class="card-body">
+              <h5 class="card-title">{{publication.titre}}</h5>
+              <p class="card-text">{{publication.description | u.truncate(10, '...', false)}}</p>
+              
+              <div class="d-flex justify-content-between align-items-center ">
+                <div class="btn-group">
+                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                </div>
+                <small class="text-muted">Publier par Rafanomezantsoa Dazy Exelle Nicolas</small>
+              </div>
+              <hr>
+              <div class="d-flex justify-content-between align-items-center mt-2">
+                <div class="btn-group">
+                  <a href="{{path('app_publication_show', {id: publication.id})}}" type="button" class="btn btn-sm btn-outline-secondary">Voir</a>
+                </div>
+                <small class="text-muted">{{publication.createdAt|ago}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
            {% endfor %}
+     
+        {% endfor %}
+           </div> 
+           {% else %}
+                <p class="h2 mt-5 text-center">Pas encore de publication <a href={{path('app_publication_create')}}>Soyez le premier</a></p>
+           {% endif %}
 {% endblock %}
+
