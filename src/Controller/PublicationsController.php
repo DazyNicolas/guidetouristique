@@ -8,11 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\PublicationRepository;
 use App\Entity\Publication;
 use App\Form\PublicationType;
+use App\Repository\GuideRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use MercurySeries\FlashyBundle\FlashyNotifier;
-
-
+use Proxies\__CG__\App\Entity\Guide;
 
 class PublicationsController extends AbstractController
 {
@@ -29,7 +29,7 @@ class PublicationsController extends AbstractController
 
     #[Route('/publications/create', name: 'app_publication_create', methods: "GET|POST")]
 
-    public function create(Request $request, EntityManagerInterface $em, FlashyNotifier $flashy): Response
+    public function create(Request $request, EntityManagerInterface $em, FlashyNotifier $flashy, GuideRepository $guideRepo): Response
     {
        
 
@@ -41,12 +41,9 @@ class PublicationsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // dd($form->getData()); permet récupére la requet sur le formulaire
-            $publication = $form->getData();
-            // $publication = new Publication;
-            //  $publication->setTitre($data['titre']);
-            //  $publication->setDescription($data['description']);
-
+            
+           $janeDoe = $guideRepo->findOneBy(['email'=>'janedoe@gmail.com']);
+           $publication->setGuide($janeDoe);
             $em->persist($publication);
             $em->flush();
 
