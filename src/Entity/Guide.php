@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GuideRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -47,6 +49,14 @@ class Guide implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $age = null;
+
+    #[ORM\OneToMany(mappedBy: 'Guide', targetEntity: Publication::class, orphanRemoval: true)]
+    private Collection $publications;
+
+    public function __construct()
+    {
+        $this->publications = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -174,6 +184,36 @@ class Guide implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAge(string $age): self
     {
         $this->age = $age;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Publication>
+     */
+    public function getPublications(): Collection
+    {
+        return $this->publications;
+    }
+
+    public function addPublication(Publication $publication): self
+    {
+        if (!$this->publications->contains($publication)) {
+            $this->publications->add($publication);
+            $publication->setGuide($this);
+        }
+
+        return $this;
+    }
+
+    public function removePublication(Publication $publication): self
+    {
+        if ($this->publications->removeElement($publication)) {
+            // set the owning side to null (unless already changed)
+            if ($publication->getGuide() === $this) {
+                $publication->setGuide(null);
+            }
+        }
 
         return $this;
     }

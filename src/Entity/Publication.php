@@ -36,11 +36,15 @@ class Publication
 
      // NOTE: This is not a mapped field of entity metadata, just a simple property.
      #[Vich\UploadableField(mapping: 'publication_image', fileNameProperty: 'imageName')]
-     #[Assert\Image(maxSize:"200M")]
+     #[Assert\Image(maxSize:"8M")]
      private ?File $imageFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageName = null;
+
+    #[ORM\ManyToOne(inversedBy: 'publications')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Guide $Guide = null;
 
     public function getId(): ?int
     {
@@ -106,6 +110,18 @@ class Publication
     public function setImageName(?string $imageName): self
     {
         $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    public function getGuide(): ?Guide
+    {
+        return $this->Guide;
+    }
+
+    public function setGuide(?Guide $Guide): self
+    {
+        $this->Guide = $Guide;
 
         return $this;
     }
