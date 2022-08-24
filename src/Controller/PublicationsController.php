@@ -42,8 +42,7 @@ class PublicationsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-           $janeDoe = $guideRepo->findOneBy(['email'=>'janedoe@gmail.com']);
-           $publication->setGuide($janeDoe);
+            $publication ->setGuide($this->getUser());
             $em->persist($publication);
             $em->flush();
 
