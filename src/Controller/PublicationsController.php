@@ -12,7 +12,7 @@ use App\Repository\GuideRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use MercurySeries\FlashyBundle\FlashyNotifier;
-use Proxies\__CG__\App\Entity\Guide;
+
 
 class PublicationsController extends AbstractController
 {

@@ -9,14 +9,16 @@
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="{{path('app_home')}}" class="nav-link px-2 text-secondary">Home</a></li>
           <li><a href="{{path('app_publications')}}" class="nav-link px-2 text-white">Publication</a></li>
-          <li><a href="{{path('app_publication_create')}}" class="nav-link px-2 text-white">Crée un publication</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
         </ul>
-      
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">Login</button>
-          <button type="button" class="btn btn-warning">Sign-up</button>
+          {% if app.user %}
+          <a href="{{path('app_publication_create')}}" type="button" class="btn btn-outline-light me-2">Crée un publication</a>
+          <a type="button" class="btn btn-outline-light me-2">Votre compte</a>
+          <a href={{path('app_logout')}} type="button" class="btn btn-warning">Deconection</a>
+          {% else %}
+          <a href="{{path('app_login')}}" type="button" class="btn btn-outline-light me-2">Login</a>
+          <a type="button" class="btn btn-warning">Sign-up</a>
+          {% endif %}
         </div>
       </div>
     </div>
