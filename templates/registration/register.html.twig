@@ -3,24 +3,55 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
+<div class="row">
+
+    <div class="col-md-8 mx-auto">
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+    <h1 class="text-center p-4">Register</h1>
 
     {{ form_start(registrationForm) }}
+    <div class="row">
+        <div class="col-md-6">
         {{ form_row(registrationForm.nom) }}
+        </div>
+        <div class="col-md-6">
         {{ form_row(registrationForm.prenom) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
         {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.age) }}
-        {{ form_row(registrationForm.parc) }}
+        </div>
+        <div class="col-md-6">
+          {{ form_row(registrationForm.parc) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+         {{ form_row(registrationForm.age) }}
+        </div>
+        <div class="col-md-6">
         {{ form_row(registrationForm.sex) }}
-        {{ form_row(registrationForm.plainPassword, {
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
+        </div>
+    </div>
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn btn-primary">Register</button>
+    <div class="d-grid gap-2">
+    <button type="submit" class="btn btn-primary " formnovalidate>Register</button>
     {{ form_end(registrationForm) }}
+    </div>
+    </div>
+
+</div>
+    
 {% endblock %}
