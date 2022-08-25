@@ -6,6 +6,7 @@ use App\Repository\GuideRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\Traits\Timestampable;
@@ -14,6 +15,7 @@ use App\Entity\Traits\Timestampable;
 #[ORM\Entity(repositoryClass: GuideRepository::class)]
 #[ORM\Table(name:"Guides")]
 #[ORM\HasLifecycleCallbacks]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class Guide implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use Timestampable;
@@ -52,6 +54,9 @@ class Guide implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'Guide', targetEntity: Publication::class, orphanRemoval: true)]
     private Collection $publications;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
 
     public function __construct()
     {
@@ -221,5 +226,17 @@ class Guide implements UserInterface, PasswordAuthenticatedUserInterface
     public function getFullName(): ?string
     {
         return $this->getNom() . ' ' . $this->getPrenom();
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
     }
 }

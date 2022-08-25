@@ -326,6 +326,9 @@
             "./webpack.config.js"
         ]
     },
+    "symfonycasts/verify-email-bundle": {
+        "version": "v1.11.0"
+    },
     "theofidry/psysh-bundle": {
         "version": "4.5.0"
     },
