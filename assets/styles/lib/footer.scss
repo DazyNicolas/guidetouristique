@@ -1,0 +1,38 @@
+/* debut de footer*/
+
+.footer{
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #000;
+    .content-footer{
+        .logo-footer{
+            margin-bottom: 3rem;
+            strong{
+                font-size: 2rem;
+                color: $rouge_color;
+                span{
+                    font-size: 1rem;
+                    margin-left: 4px;
+                    color: $white_color;
+                }
+            }
+        }
+
+        .social{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 4rem;
+            .icon{
+                i{
+                    font-size: 2rem;
+                }
+            }
+
+        }
+    }
+}
+/* fin de footer*/

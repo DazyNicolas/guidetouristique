@@ -1,25 +1,72 @@
 
-  <header class="p-3 bg-dark text-white">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-           <h4>Guide Touristique</h4>
-        </a>
-
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="{{path('app_home')}}" class="nav-link px-2 text-secondary">Home</a></li>
-          <li><a href="{{path('app_publications')}}" class="nav-link px-2 text-white">Publication</a></li>
-        </ul>
-        <div class="text-end">
-          {% if app.user %}
-          <a href="{{path('app_publication_create')}}" type="button" class="btn btn-outline-light me-2">Crée un publication</a>
-          <a type="button" class="btn btn-outline-light me-2">Votre compte</a>
-          <a href={{path('app_logout')}} type="button" class="btn btn-warning">Deconection</a>
-          {% else %}
-          <a href="{{path('app_login')}}" type="button" class="btn btn-outline-light me-2">Login</a>
-          <a href="{{path('app_register')}}" type="button" class="btn btn-warning">Sign-up</a>
-          {% endif %}
+  <header>
+       <div class="all-header">
+        <div class="bar">
+            <div class="bar-line"></div>
         </div>
-      </div>
-    </div>
-  </header>
+        <a href="{{path('app_home')}}" class="logo">
+            <strong>Guide <span>.Touristique</span></strong>
+        </a>
+        
+            <nav>
+
+                <ul class="nav-link">
+
+                
+                 
+                
+                {% if (app.user) %}
+        
+            
+                   <li>
+                        <a href="{{path('app_publication_create')}}">Crée un publication</a>
+                    </li>
+                    <li>
+                        <a href="#">Compte</a>
+                    </li>
+                    <li>
+                        <a href="{{path('app_publications')}}">Publication</a>
+                    </li> 
+                {% else  %}       
+                    <li>
+                        <a href="#">Accueil</a>
+                    </li>
+                    <li>
+                        <a href="#">Guide</a>
+                    </li>
+                    <li>
+                        <a href="#">A-propos</a>
+                    </li>
+                    <li>
+                        <a href="#">Photo</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                {% endif %}
+               
+                    
+                </ul>
+            </nav>
+            <div class="button-action">
+                <ul>
+                  {% if app.user %}
+                    <li>
+                         <a href={{path('app_logout')}} type="button" class="btn btn-warning">Deconection</a>
+                    </li>
+                   {% else %}
+                     <li>
+                        <a href="{{path('app_login')}}" type="button" class="btn btn-outline-light me-2">Login</a>
+                    </li>
+                   {% endif %}
+                </ul>
+               
+            </div>
+       </div>
+    </header>  
+  
+  
+  
+  
+  
+  

@@ -1,8 +1,13 @@
 @import "~bootstrap/scss/bootstrap";
 @import'./lib/flashy.scss';
+@import './lib/general.scss';
 @import './lib/publication.scss';
+@import './lib/nav.scss';
+@import './lib/login.scss';
+@import './lib/register.scss';
+@import './lib/home.scss';
+@import './lib/footer.scss';
+@import './lib/form-create.scss';
 
 
-body {
-    background-color:#fff;
-}
+

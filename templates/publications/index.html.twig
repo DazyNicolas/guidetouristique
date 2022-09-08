@@ -4,7 +4,7 @@
 
 {% block body %}
 
- <section class="py-5 text-center container">
+ <section class="py-5 text-center container top">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Publication des guides</h1>
@@ -15,6 +15,7 @@
       </div>
     </div>
   </section>
+  <div class="container all-publication">
         {% if publications|length > 0 %}
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           {% for row in publications|batch(3) %}  
@@ -26,8 +27,7 @@
             <img class="bd-placeholder-img card-img-top" src="{{ (publication.imageName ? vich_uploader_asset(publication) : asset('images/isalo-3.jpg')) | imagine_filter('squared_thumbnall_medium') }}" alt="{{ publication.titre }}">
           </a>
           </div>
-          
-            <div class="card-body">
+            <div class="card-body" >
               <h5 class="card-title">{{publication.titre}}</h5>
               <p class="card-text">{{publication.description | u.truncate(10, '...', false)}}</p>
               
@@ -54,5 +54,6 @@
            {% else %}
                 <p class="h2 mt-5 text-center">Pas encore de publication <a href={{path('app_publication_create')}}>Soyez le premier</a></p>
            {% endif %}
+           </div>
 {% endblock %}
 

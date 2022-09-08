@@ -3,4 +3,14 @@
    &:hover{
         transform: scale(1.075);
     }
+
+    
+}
+.all-publication{
+    margin-bottom: 2rem;
+    .publication{
+        .card{
+            background-color:  rgb(53, 54, 58) !important;
+        }
+    }
 }
