@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use App\Repository\GuideRepository;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
+use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -30,7 +31,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager, FlashyNotifier $flashy): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager, FlashyNotifier $flashy, SendMailService $mail): Response
     {
         if ($this->getUser()) {
             $flashy->warning('Vous ete déjat connecté');
@@ -55,17 +56,27 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+
+            // On envoie un email
+
+            $mail->send(
+                'no-replay@monsite.com',
+                $user->getEmail(),
+                'Actiovation de votre compte sur guide touristique',
+                'register',
+                compact('user')
+            );
+
             
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('noreply@guide.com', 'Guide'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
+          //  $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+          //      (new TemplatedEmail())
+           //         ->from(new Address('noreply@guide.com', 'Guide'))
+           //         ->to($user->getEmail())
+           //         ->subject('Please Confirm your Email')
+           //         ->htmlTemplate('registration/confirmation_email.html.twig')
+          //  );
             // do anything else you need here, like send an email
-            dd($this->emailVerifier);
             return $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,

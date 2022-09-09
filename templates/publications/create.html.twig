@@ -3,6 +3,18 @@
 {% block title 'Nouveau publications' %}
 
 {% block body %}
+{% if app.user and app.user.getIsVerified() == false %}
+<div class="containe creat-pub">
+	<div class="row top">
+		<div class="col-md-6 mx-auto">
+			<h1>Vous dévais activé votre compte pour accéder a la création publication </h1>
+
+			<a href="#">Votre lien d'activaion</a>
+		</div>
+	</div>
+	</div>
+{% else %}
+	
 	<div class="containe creat-pub">
 	<div class="row top">
 		<div class="col-md-6 mx-auto">
@@ -13,4 +25,6 @@
 		</div>
 	</div>
 	</div>
+{% endif %}
+
 {% endblock %}
