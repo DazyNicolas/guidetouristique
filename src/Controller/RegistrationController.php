@@ -7,7 +7,9 @@ use App\Form\RegistrationFormType;
 use App\Repository\GuideRepository;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
+use App\Service\JWTService;
 use App\Service\SendMailService;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -31,7 +33,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager, FlashyNotifier $flashy, SendMailService $mail): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager, FlashyNotifier $flashy, SendMailService $mail, JWTService $jwt): Response
     {
         if ($this->getUser()) {
             $flashy->warning('Vous ete déjat connecté');
@@ -56,15 +58,29 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+           //On génère le JWT de l'utilisateur
+           // On crée le header
+           $header = [
+            "alg"=>"HS256",
+            "typ"=> "JWT"
+           ];
+           //On crée le Payload
 
-            // On envoie un email
+           $payload = [
+                'user_id' => $user->getId()
+           ];
+
+           //On géner le token
+           $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret') );
+
+            // On envoie un email sans bundel
 
             $mail->send(
                 'no-replay@monsite.com',
                 $user->getEmail(),
                 'Actiovation de votre compte sur guide touristique',
                 'register',
-                compact('user')
+                compact('user', 'token')
             );
 
             
@@ -89,33 +105,83 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator, GuideRepository $guideRepository): Response
-    {
-        $id = $request->get('id');
+    #[Route('/verify/{token}', name: 'app_verify_guide')]
+    public function verify_guide($token, JWTService $jwt, FlashyNotifier $flashy, GuideRepository $guide, EntityManagerInterface $entityManager){
+      //On vérifie si le token est valide, n'a pas expiré et n'a pas été modifié
 
-        if (null === $id) {
-            return $this->redirectToRoute('app_register');
+      if($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret')) )
+      {
+        //On récupère le payload
+
+        $payload = $jwt->getPayload($token);
+
+        // On récupere le user du token
+        $user = $guide->find($payload['user_id']);
+
+        // On vérifie que l'utilisateur existe et n'a pas encore activé son compte
+        if($user && !$user->getIsVerified()){
+            $user->setIsVerified(true);
+            $entityManager->flush($user);
+            $flashy->warning('Votre compte est activé');
+            return $this->redirectToRoute('app_publication_create');
+
         }
 
-        $user = $guideRepository->find($id);
+      }
 
-        if (null === $user) {
-            return $this->redirectToRoute('app_register');
-        }
+      // Ici un problème se dans le token
+      $flashy->warning('Token invalide ou a expiré');
 
-        // validate email confirmation link, sets User::isVerified=true and persists
-        try {
-            $this->emailVerifier->handleEmailConfirmation($request, $user);
-        } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-
-            return $this->redirectToRoute('app_home');
-        }
-
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
-
-        return $this->redirectToRoute('app_home');
+      return $this->redirectToRoute('app_login');
     }
+
+    
+    #[Route('/renvoiverif', name: 'resend_verif')]
+
+    public function resendVerif(JWTService $jwt, SendMailService $email, GuideRepository $guide, FlashyNotifier $flashy): Response
+    {
+        $user= $this->getUser();
+
+        if(!$user){
+            $flashy->warning('Vous devez être connecté pour accéder à cette page');
+            return $this->redirectToRoute('app_login');
+        }
+
+        if($user->getIsVerified()){
+            $flashy->warning('Vous compte est déjat activé');
+            return $this->redirectToRoute('app_publication_create');
+        }
+
+        
+
+            //On génère le JWT de l'utilisateur
+            // On crée le header
+            $header = [
+                "alg"=>"HS256",
+                "typ"=> "JWT"
+            ];
+            //On crée le Payload
+
+            $payload = [
+                    'user_id' => $user->getId()
+            ];
+
+            //On géner le token
+            $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret') );
+
+            // On envoie un email sans bundel
+
+                $email->send(
+                    'no-replay@monsite.com',
+                    $user->getEmail(),
+                    'Actiovation de votre compte sur guide touristique',
+                    'register',
+                    compact('user', 'token')
+                );
+
+                $flashy->success('Email de vérification envoyé');
+                return $this->redirectToRoute('app_publication_create');
+    }
+
+    
 }

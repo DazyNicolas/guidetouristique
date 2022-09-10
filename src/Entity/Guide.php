@@ -234,7 +234,7 @@ class Guide implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->getNom() . ' ' . $this->getPrenom();
     }
 
-    public function getIsVerified(): bool
+    public function getIsVerified(): ?bool
     {
         return $this->isVerified;
     }
