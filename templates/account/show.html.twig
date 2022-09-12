@@ -1,0 +1,23 @@
+{% extends "layouts/base.html.twig" %}
+{% block title %} Profile {% endblock %}
+
+{% block body %}
+
+<div class="container reset-password-form">
+
+<div class="row">
+    <div class="col-md-6 mx-auto text-center">
+        <h1>Mon Profile</h1>
+
+        <img src="{{app.user.getGravatar}}" alt="">
+
+        <p>{{app.user.email}}</p>
+        <p>{{app.user.fullName}}</p>
+
+        <a href="#">Parametre de votre compte</a> | <a href="#">Changer le mot de passe</a>
+    </div>
+</div>
+
+</div>
+    
+{% endblock %}

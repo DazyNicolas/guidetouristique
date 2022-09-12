@@ -245,4 +245,10 @@ class Guide implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
+    public function getGravatar($size=200)
+    {
+        return 'https://www.gravatar.com/avatar/'. md5(strtolower(trim($this->getEmail()))) .'/?s='.$size;
+    }
 }
