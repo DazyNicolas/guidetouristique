@@ -12,9 +12,10 @@
         <img class="mb-4 rounded-circle" src="{{app.user.getGravatar}}" alt="{{app.user.fullName}}">
 
         <p class="mt-4">{{app.user.email}}</p>
+        <p><small>Compte créé le {{app.user.createdAt|date('d/m/y')}}</small><p>
         <p class="mt-4">{{app.user.fullName}}</p>
 
-        <a href="#">Parametre de votre compte</a> | <a href="#">Changer le mot de passe</a>
+        <a href="{{path('app_account_edit')}}">Parametre de votre compte</a> | <a href="#">Changer le mot de passe</a>
     </div>
 </div>
 

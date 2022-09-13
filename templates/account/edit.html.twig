@@ -1,0 +1,39 @@
+{% extends "layouts/base.html.twig" %}
+{% block title %} Modifier le compte utilisateur {% endblock %}
+
+{% block body %}
+
+<div class="container reset-password-form">
+
+<div class="row">
+    <div class="col-md-6 mx-auto ">
+        <h1 class="mb-4 text-center">Mettre à jour le profil</h1>
+
+        {{form_start(form)}}
+
+            <div class="row">
+                <div class="col-md-6">  {{form_row(form.nom)}}</div>
+                <div class="col-md-6">{{form_row(form.prenom)}}</div>
+            </div>
+      
+            <div class="row">
+                <div class="col-md-6">  {{form_row(form.parc)}}</div>
+                <div class="col-md-6">{{form_row(form.sex)}}</div>
+            </div>
+      
+            <div class="row">
+                <div class="col-md-6">  {{form_row(form.age)}}</div>
+                <div class="col-md-6">{{form_row(form.email)}}</div>
+            </div>
+      
+
+        <input type="submit" class="btn btn-primary btn-lg btn-block"></input>
+
+        {{form_end(form)}}
+       
+    </div>
+</div>
+
+</div>
+    
+{% endblock %}
