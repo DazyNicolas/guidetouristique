@@ -14,7 +14,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ChangePasswordFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
+    {    
+        if ($options['current_password_is_required'])
+        {
         $builder
             ->add('currentPassword', PasswordType::class,[
                 'constraints' => [
@@ -24,7 +26,10 @@ class ChangePasswordFormType extends AbstractType
                     new UserPassword(),
                 ],
                 'label' => 'Mot de passe actuel',
-            ])
+            ]);
+        }
+
+        $builder
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
@@ -56,6 +61,8 @@ class ChangePasswordFormType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([]);
+        $resolver->setDefaults([
+            'current_password_is_required' => false
+        ]);
     }
 }
