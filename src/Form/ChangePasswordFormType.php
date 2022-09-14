@@ -26,6 +26,9 @@ class ChangePasswordFormType extends AbstractType
                     new UserPassword(),
                 ],
                 'label' => 'Mot de passe actuel',
+                'attr' => [
+                    'autocomplete' => 'off'
+                ],
             ]);
         }
 
