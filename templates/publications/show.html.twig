@@ -15,10 +15,12 @@
     <p class="card-text text-break">{{publication.description}}</p>
     <p class="card-text"> Publier par {{publication.guide.fullName}} <small class="text-muted">{{publication.createdAt|ago}}</small></p>
   </div>
+{% if app.user == publication.guide %}
   <div class="btn-group" role="group" aria-label="Basic mixed styles example">
   <a href="{{path('app_publication_edit', {'id': publication.id})}}" type="button" class="btn btn-warning">Moddifier</a>
   <a href="#" type="button" class="btn btn-danger " onClick="event.preventDefault(); confirm('Vous voulez vraiment supprimer cette publication ?') && document.querySelector('#js-publication-delete-form').submit()">Supprimer</a>
-</div>
+  </div>
+{% endif %}
 </div>
 </div>
 

@@ -16,8 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccountController extends AbstractController
 {
     #[Route('/account', name: 'app_account')]
-    public function show(): Response
+    public function show( FlashyNotifier $flashy): Response
     {
+        if(!$this->getUser()){
+            $flashy->warning('Vous devez d\'abord vous connecter');
+            return $this->redirectToRoute('app_login'); 
+        }
+
         return $this->render('account/show.html.twig', [
             'controller_name' => 'AccountController',
         ]);
@@ -27,6 +32,12 @@ class AccountController extends AbstractController
 
     public function edit(Request $request, EntityManagerInterface $em, FlashyNotifier $flashy) : Response
     {
+        if(! $this->getUser()){
+            $flashy->warning('Vous devez d\'abord vous connecter');
+            return $this->redirectToRoute('app_login'); 
+           
+        }
+
         $user = $this->getUser();
         $form =  $this->createForm(GuideFormType::class, $user);
         $form->handleRequest($request);
@@ -48,6 +59,12 @@ class AccountController extends AbstractController
     #[Route('/account/change-password', name: 'app_account_change_password')]
     public function changePassword(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $PasswordHash, FlashyNotifier $flashy) : Response
     {
+        if(! $this->getUser()){
+            $flashy->warning('Vous devez d\'abord vous connecter');
+            return $this->redirectToRoute('app_login'); 
+           
+        }
+
         $user = $this->getUser();
 
         $form = $this->createForm(ChangePasswordFormType::class, null, [

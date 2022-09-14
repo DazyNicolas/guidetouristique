@@ -33,6 +33,17 @@ class PublicationsController extends AbstractController
     {
        
 
+        if(!$this->getUser()){
+
+            $flashy->warning('Vous devez d\'abord vous connecter');
+            return $this->redirectToRoute('app_login'); 
+        };
+
+        if ($this->getUser()->getIsVerified()){
+            $flashy->warning('Vous devez avoir un compte vérifié');
+            return $this->redirectToRoute('app_home'); 
+        }
+
         $publication = new Publication; //permet de récupére le  requete tapper par l'utilsateur
 
         $form =   $this->createForm(PublicationType::class, $publication);
@@ -74,6 +85,24 @@ class PublicationsController extends AbstractController
 
     public function edit(Request $request, Publication $publication, EntityManagerInterface $em, FlashyNotifier $flashy): Response
     {
+
+        if(!$this->getUser()){
+
+            $flashy->warning('Vous devez d\'abord vous connecter');
+            return $this->redirectToRoute('app_login'); 
+        };
+
+        if (!$this->getUser()->getIsVerified()){
+            $flashy->warning('Vous devez avoir un compte vérifié');
+            return $this->redirectToRoute('app_home'); 
+        }
+
+        if ($publication->getGuide() != $this->getUser()){
+            $flashy->warning('Vous n \'êtes pas l\'auteur de ce post');
+            return $this->redirectToRoute('app_home'); 
+        }
+
+
         $form =   $this->createForm(PublicationType::class, $publication);
 
         $form->handleRequest($request);
@@ -96,7 +125,21 @@ class PublicationsController extends AbstractController
 
     public function delete(Request $request, Publication $publication, EntityManagerInterface $em,  FlashyNotifier $flashy)
     {
+        if(!$this->getUser()){
 
+            $flashy->warning('Vous devez d\'abord vous connecter');
+            return $this->redirectToRoute('app_login'); 
+        };
+
+        if (!$this->getUser()->getIsVerified()){
+            $flashy->warning('Vous devez avoir un compte vérifié');
+            return $this->redirectToRoute('app_home'); 
+        }
+
+        if (!$publication->getGuide() != $this->getUser()){
+            $flashy->warning('Vous n\'êtes pas l\'auter de ce post');
+            return $this->redirectToRoute('app_home'); 
+        }
 
        // dd($request->request->get('csrf_token'));
         if($this->isCsrfTokenValid('publication_deletion_'. $publication->getId(),$request->request->get('csrf_token'))){
